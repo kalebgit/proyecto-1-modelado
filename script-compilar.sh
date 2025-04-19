@@ -47,28 +47,33 @@ if [ $? -eq 0 ]; then
   
   # Mostrar opciones de ejecución
   echo -e "${AZUL}¿Qué deseas ejecutar?${SIN_COLOR}"
-  echo "1. Aplicación principal"
-  echo "2. Prueba de PC"
-  echo "3. Prueba de base de datos"
-  echo "4. Prueba del sistema completo"
+  echo "1. Aplicación principal (Consola)"
+  echo "2. Aplicación principal (Interfaz Gráfica)"
+  echo "3. Prueba de PC"
+  echo "4. Prueba de base de datos"
+  echo "5. Prueba del sistema completo"
   echo "0. Salir"
   
   read -p "Selecciona una opción: " opcion
   
   case $opcion in
     1)
-      echo -e "${AZUL}Ejecutando aplicación principal...${SIN_COLOR}"
+      echo -e "${AZUL}Ejecutando aplicación principal (Consola)...${SIN_COLOR}"
       java -cp "$BIN_DIR:$LIB_DIR/$SQLITE_JAR" main.Main
       ;;
     2)
+      echo -e "${AZUL}Ejecutando aplicación principal (Interfaz Gráfica)...${SIN_COLOR}"
+      java -cp "$BIN_DIR:$LIB_DIR/$SQLITE_JAR" gui.MainGUI
+      ;;
+    3)
       echo -e "${AZUL}Ejecutando prueba de PC...${SIN_COLOR}"
       java -cp "$BIN_DIR:$LIB_DIR/$SQLITE_JAR" test.TestPC
       ;;
-    3)
+    4)
       echo -e "${AZUL}Ejecutando prueba de base de datos...${SIN_COLOR}"
       java -cp "$BIN_DIR:$LIB_DIR/$SQLITE_JAR" test.TestDBManager
       ;;
-    4)
+    5)
       echo -e "${AZUL}Ejecutando prueba del sistema completo...${SIN_COLOR}"
       java -cp "$BIN_DIR:$LIB_DIR/$SQLITE_JAR" test.TestSistemaCompleto
       ;;
