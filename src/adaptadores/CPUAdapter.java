@@ -2,52 +2,32 @@ package adaptadores;
 
 import componentes.*;
 
-/**
- * Adaptador para hacer compatibles CPUs AMD con placas base Intel y viceversa.
- * Implementa el patrón Adapter.
- * 
- * @author Equipo MonosChinos MX
- * @version 1.0
- */
-public class CPUAdapter extends ComponenteAdapter {
+public class CPUAdapter extends CPU {
     private String socketAdaptado;
+    private CPU cpuOriginal;
     
-    /**
-     * Constructor de la clase CPUAdapter.
-     * 
-     * @param cpu El CPU original que se adaptará.
-     * @param socketAdaptado El socket al que se adaptará.
-     */
     public CPUAdapter(CPU cpu, String socketAdaptado) {
-        super(cpu, "Adaptador de Socket " + cpu.getSocket() + " a " + socketAdaptado, 499.99);
+        // Llama al constructor de CPU
+        super(cpu.getNombre() + " con Adaptador", 
+              cpu.getPrecio() + 499.99, 
+              cpu.getMarca(), 
+              cpu.getCantidadNucleos(),
+              socketAdaptado);
         this.socketAdaptado = socketAdaptado;
+        this.cpuOriginal = cpu;
     }
     
-    /**
-     * Verifica la compatibilidad con otro componente.
-     * El adaptador hace que el CPU sea compatible con placas base que tengan el socket adaptado.
-     * 
-     * @param componente El componente con el que se verifica la compatibilidad.
-     * @return true si son compatibles, false en caso contrario.
-     */
     @Override
     public boolean esCompatibleCon(Componente componente) {
         if (componente instanceof Motherboard) {
             Motherboard mb = (Motherboard) componente;
-            return socketAdaptado.equals(mb.getSocket());
+            return this.getSocket().equals(mb.getSocket());
         }
-        return true; // Con otros componentes no hay incompatibilidad directa
+        return true;
     }
     
-    /**
-     * Representación en texto del adaptador de CPU.
-     * 
-     * @return Una cadena que representa al adaptador.
-     */
     @Override
     public String toString() {
-        CPU cpu = (CPU) componenteOriginal;
-        return super.toString() + " - Núcleos: " + cpu.getCantidadNucleos() + 
-               " - Socket Original: " + cpu.getSocket() + " - Socket Adaptado: " + socketAdaptado;
+        return super.toString() + " (Adaptado de " + cpuOriginal.getSocket() + ")";
     }
 }
